@@ -33,3 +33,6 @@ main
 *.env
 
 todo.txt
+
+# Wire generated files
+wire_gen.go

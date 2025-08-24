@@ -1,11 +1,13 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/config"
+	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/middlewares"
+	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/routes"
+	"io"
+	"log"
+	"os"
 )
 
 func main() {
@@ -14,26 +16,20 @@ func main() {
 	gin.SetMode(cfg.GinMode)
 	r := gin.Default()
 
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
+	r.Use(middlewares.CorsMiddleware)
+	r.Use(middlewares.LocalizationMiddleware)
 
-	r.Use(func(c *gin.Context) {
-		c.Header("Access-Control-Allow-Origin", "*")
-		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-		c.Next()
-	})
+	appLogFile, _ := os.OpenFile("./logs/app.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	gin.DefaultWriter = io.MultiWriter(appLogFile, os.Stdout)
 
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "OK",
-			"message": "Server is ready",
-		})
-	})
+	infoLogFile, _ := os.OpenFile("./logs/info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	log.SetOutput(io.MultiWriter(infoLogFile, os.Stdout))
+
+	routes.InitRoutes(r)
 
 	port := cfg.Port
 	if port == "" {
-		port = "8080"
+		port = "1337"
 	}
 
 	log.Printf("Server starting on port %s", port)

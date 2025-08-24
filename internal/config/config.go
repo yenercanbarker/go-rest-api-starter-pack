@@ -5,11 +5,12 @@ import (
 )
 
 type Config struct {
-	Port     string
-	GinMode  string
-	Database DatabaseConfig
-	Redis    RedisConfig
-	RabbitMQ RabbitMQConfig
+	Port        string
+	GinMode     string
+	Environment string
+	Database    DatabaseConfig
+	Redis       RedisConfig
+	RabbitMQ    RabbitMQConfig
 }
 
 type DatabaseConfig struct {
@@ -35,7 +36,8 @@ type RabbitMQConfig struct {
 
 func Load() *Config {
 	return &Config{
-		Port: getEnv("APP_PORT", "8080"),
+		Port:        getEnv("APP_PORT", "1337"),
+		Environment: getEnv("APP_ENV", "development"),
 		Database: DatabaseConfig{
 			Host:     getEnv("DB_HOST", "localhost"),
 			Port:     getEnv("DB_PORT", "3306"),
