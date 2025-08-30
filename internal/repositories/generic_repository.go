@@ -2,6 +2,14 @@ package repositories
 
 import "gorm.io/gorm"
 
+type BaseRepositoryInterface[T any] interface {
+	FindAll() ([]T, error)
+	FindByID(id uint) (T, error)
+	Create(entity *T) error
+	Update(entity *T) error
+	Delete(entity *T) error
+}
+
 type GenericRepository[T any] struct {
 	DB *gorm.DB
 }

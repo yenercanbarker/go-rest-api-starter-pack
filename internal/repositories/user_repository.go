@@ -5,6 +5,11 @@ import (
 	"gorm.io/gorm"
 )
 
+type UserRepositoryInterface interface {
+	BaseRepositoryInterface[models.User]
+	FindByEmail(email string) (*models.User, error)
+}
+
 type UserRepository struct {
 	*GenericRepository[models.User]
 }

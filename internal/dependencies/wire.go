@@ -19,6 +19,8 @@ var CommonSet = wire.NewSet(
 func InitUserDependencyInjection() (*handlers.UserHandler, error) {
 	wire.Build(
 		CommonSet,
+		wire.Bind(new(repositories.UserRepositoryInterface), new(*repositories.UserRepository)),
+		wire.Bind(new(services.UserServiceInterface), new(*services.UserService)),
 		repositories.NewUserRepository,
 		services.NewUserService,
 		handlers.NewUserHandler,

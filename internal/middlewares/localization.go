@@ -5,7 +5,7 @@ import (
 )
 
 func LocalizationMiddleware(c *gin.Context) {
-	var language string
+	language := "en"
 
 	languageFromQuery, isLanguageFromQueryExists := c.GetQuery("lang")
 	if isLanguageFromQueryExists {
@@ -19,7 +19,6 @@ func LocalizationMiddleware(c *gin.Context) {
 		c.Next()
 	}
 
-	language = "en"
 	c.Set("lang", language)
 	c.Next()
 }

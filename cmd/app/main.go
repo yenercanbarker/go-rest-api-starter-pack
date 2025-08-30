@@ -5,9 +5,7 @@ import (
 	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/config"
 	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/middlewares"
 	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/routes"
-	"io"
 	"log"
-	"os"
 )
 
 func main() {
@@ -19,11 +17,7 @@ func main() {
 	r.Use(middlewares.CorsMiddleware)
 	r.Use(middlewares.LocalizationMiddleware)
 
-	appLogFile, _ := os.OpenFile("./logs/app.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-	gin.DefaultWriter = io.MultiWriter(appLogFile, os.Stdout)
-
-	infoLogFile, _ := os.OpenFile("./logs/info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-	log.SetOutput(io.MultiWriter(infoLogFile, os.Stdout))
+	config.InitLogging()
 
 	routes.InitRoutes(r)
 

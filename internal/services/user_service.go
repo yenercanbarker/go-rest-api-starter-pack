@@ -8,11 +8,19 @@ import (
 	"github.com/yenercanbarker/go-rest-api-starter-pack/internal/utils"
 )
 
-type UserService struct {
-	repo *repositories.UserRepository
+type UserServiceInterface interface {
+	GetAllUsers() ([]models.User, error)
+	GetUserByID(id uint) (*models.User, error)
+	CreateUser(userRequest *requests.UserCreateRequest, userResponse *responses.UserResponse) error
+	UpdateUser(userRequest *requests.UserUpdateRequest, userResponse *responses.UserResponse, id uint) error
+	DeleteUser(id uint) error
 }
 
-func NewUserService(repo *repositories.UserRepository) *UserService {
+type UserService struct {
+	repo repositories.UserRepositoryInterface
+}
+
+func NewUserService(repo repositories.UserRepositoryInterface) *UserService {
 	return &UserService{repo: repo}
 }
 
