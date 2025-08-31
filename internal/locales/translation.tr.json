@@ -1,0 +1,7 @@
+{
+  "hello": "Merhaba",
+  "welcome": "Merhaba, {{.Name}}!",
+  "errors": {
+    "internalServer": "Sistemsel bir hata oluştu!"
+  }
+}

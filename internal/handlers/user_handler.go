@@ -22,7 +22,7 @@ func NewUserHandler(service services.UserServiceInterface) *UserHandler {
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	users, err := h.service.GetAllUsers()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, utils.ErrorResponse("Internal Server Error", err.Error()))
+		c.JSON(http.StatusInternalServerError, utils.ErrorResponse(utils.Translate(c, "errors.internalServer", nil), err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, utils.SuccessResponse(users))

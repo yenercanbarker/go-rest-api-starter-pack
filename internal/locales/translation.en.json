@@ -1,0 +1,7 @@
+{
+  "hello": "Hello",
+  "welcome": "Welcome, {{.Name}}!",
+  "errors": {
+    "internalServer": "Internal Server Error"
+  }
+}

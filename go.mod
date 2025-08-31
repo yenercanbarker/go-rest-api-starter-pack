@@ -4,7 +4,10 @@ go 1.24.5
 
 require github.com/gin-gonic/gin v1.10.1
 
-require github.com/jinzhu/copier v0.4.0 // indirect
+require (
+	github.com/jinzhu/copier v0.4.0 // indirect
+	github.com/nicksnyder/go-i18n/v2 v2.6.0 // indirect
+)
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect

@@ -10,13 +10,11 @@ func LocalizationMiddleware(c *gin.Context) {
 	languageFromQuery, isLanguageFromQueryExists := c.GetQuery("lang")
 	if isLanguageFromQueryExists {
 		language = languageFromQuery
-		c.Next()
 	}
 
-	languageFromHeader := c.GetHeader("Accept-Language")
+	languageFromHeader := c.GetHeader("Locale")
 	if languageFromHeader != "" {
 		language = languageFromHeader
-		c.Next()
 	}
 
 	c.Set("lang", language)

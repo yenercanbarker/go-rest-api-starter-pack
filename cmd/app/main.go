@@ -26,6 +26,5 @@ func main() {
 		port = "1337"
 	}
 
-	log.Printf("Server starting on port %s", port)
 	log.Fatal(r.Run(":" + port))
 }
